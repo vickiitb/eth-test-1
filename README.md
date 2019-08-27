@@ -1,1 +1,3 @@
-# eth-test-1
+# Basic smart contracts in ethereum for learning and experimentation.
+
+# No serious stuff
