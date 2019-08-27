@@ -29,19 +29,25 @@ contract Ballot {
     // array of Proposal structs, dynamically sized, we will push data here. Has to be storage array, can't be memory array
     Proposal[] public proposals;
 
-    /// Create a new ballot constructor to choose one of `proposalNames`
-    constructor(bytes32[] memory proposalNames) public {
+    /// Create a function for looping through proposalNames to choose one and execute createProposal function
+    function Ballox (bytes32[] memory proposalNames) public {
         chairperson = msg.sender;
         voters[chairperson].weight = 1;
-
-        // For each of the provided proposal names, create new proposal object and add it to end of array
+        // For each of the provided proposal names, create new proposal object
         for (uint i = 0; i < proposalNames.length; i++) {  //looping through proposalNames
+            createProposal(proposalNames[i]);
+            }
+    }        
+    
+    // createProposal function creates temporary Proposal object and using proposals.push appends it to end of 'proposals' dynamic (storage) array
+    function createProposal (bytes32 proposalName) public {
             // `Proposal({...})` creates a temporary
             // Proposal object and `proposals.push(...)`
             // appends it to the end of `proposals`.
+            require(msg.sender == chairperson);
             proposals.push(Proposal({
-                name: proposalNames[i],
+                name: proposalName,
                 voteCount: 0
             }));
-        }
     }
+}
